@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background:#018DED url(http://www.dalipaintings.com/images/paintings/the-melting-watch.jpg);
+      background-size: contain;
+      font-family:'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display:flex;
+      flex:1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border:20px solid black;
+      background: rgba(248, 205, 92, 0.8);
+      border-radius:50%;
+      margin:50px auto;
+      position: relative;
+      padding:2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width:50%;
+      height:6px;
+      background: #4B8FA2;
+      position: absolute;
+      top:50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+  </style>
+
+  <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    const setDate = () => {
+      const now = new Date();
+      setSecondHand(now);
+      setMinuteHand(now);
+      setHourHand(now);
+    }
+
+    const setSecondHand = (date) => {
+       const seconds = date.getSeconds();
+       const secondsDegrees = ((seconds / 60) * 360) + 90;
+       if (secondsDegrees === 90) secondHand.style.transition = 'none';
+       secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    }
+
+     const setMinuteHand = (date) => {
+      const minutes = date.getMinutes();
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+      if (minutesDegrees === 90) minuteHand.style.transition = 'none';
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+    }
+
+    const setHourHand = (date) => {
+      const hour = date.getHours();
+      const hoursDegrees = ((hour / 12) * 360) + 90;
+      if (hoursDegrees === 90) hourHand.style.transition = 'none';
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+    }
+
+    setInterval(setDate, 1000);
+  </script>
+</body>
+</html>
