@@ -54,6 +54,7 @@
         var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
+        console.log(callNow);
         if (callNow) func.apply(context, args);
       };
     }
